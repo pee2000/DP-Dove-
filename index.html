@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DP Dove🕊️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: gold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: purple;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 6vw;
+        }
+
+        .status p {
+            font-size: 5vw;
+            margin-bottom: 10px;
+        }
+
+        .coin-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            background: url('https://i.postimg.cc/KkBQ4B8z/IMG-20241020-WA0002.jpg') no-repeat center;
+            background-size: cover;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .score {
+            font-size: 6vw;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        #coin {
+            width: 50vw; /* Doubled the size */
+            height: 50vw;
+            cursor: pointer;
+            background: url('https://i.postimg.cc/ppt4QVw4/coin-img.png') no-repeat center;
+            background-size: contain;
+            margin-bottom: 10px;
+        }
+
+        .tap-limit {
+            font-size: 5vw;
+            color: red;
+            margin-top: 10px;
+        }
+
+        .subscription {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .subscribe-btn, .boost-btn, .referral-btn, .subscribe-earn-btn {
+            padding: 8px;
+            background: linear-gradient(135deg, maroon, red, yellow);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 4vw;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .subscribe-btn:hover, .boost-btn:hover, .referral-btn:hover, .subscribe-earn-btn:hover {
+            background: linear-gradient(135deg, yellow, red, maroon);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-btn {
+            padding: 6px;
+            background: linear-gradient(135deg, maroon, red, yellow);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 4vw;
+            text-align: center;
+        }
+
+        .social-btn:hover {
+            background: linear-gradient(135deg, yellow, red, maroon);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DP Dove🕊️</h1>
+        
+        <div class="status">
+            <p>Tap the coin to earn points!</p>
+        </div>
+
+        <div class="coin-container">
+            <div class="score">Points: 0</div>
+            <div id="coin"></div>
+            <div class="tap-limit">Taps left: 2000</div>
+        </div>
+
+        <div class="subscription">
+            <a href="https://t.me/DPDovebot" target="_blank" class="subscribe-btn" id="subscribe-channel">Subscribe Our Channel (+100)</a>
+            <a href="#" class="subscribe-earn-btn" id="earn-btn">Earn</a>
+            
+            <div class="button-group">
+                <a href="#" class="boost-btn" id="boost-btn">Boost Your Earning</a>
+                <a href="https://pee2000.github.io/DP-Dove-/#" target="_blank" class="referral-btn" id="referral-btn">Referral</a>
+            </div>
+
+            <div class="social-buttons" id="social-buttons">
+                <a href="https://t.me/blum/app?startapp=ref_zvCjDIm11f" target="_blank" class="social-btn" id="blum-btn">Blum (+50)</a>
+                <a href="https://t.me/major/start?startapp=7528807964" target="_blank" class="social-btn" id="major-btn">Major (+50)</a>
+                <a href="https://t.me/theYescoin_bot/Yescoin?startapp=y80Owy" target="_blank" class="social-btn" id="yescoin-btn">Yescoin (+50)</a>
+                <a href="http://www.youtube.com/@peesmilereview-q8u" target="_blank" class="social-btn" id="youtube-btn">YouTube (+50)</a>
+                <a href="https://x.com/DoveDp35572" target="_blank" class="social-btn" id="x-btn">Visit X (+50)</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tapCount = 0;
+        let maxTaps = 2000;
+        let points = 0;
+        let tapCooldown = false;
+        let tapRate = 1;
+        const boostCost = 20000;
+
+        document.getElementById('coin').addEventListener('click', function() {
+            closeSocialButtons(); // Close social buttons when coin is tapped
+            if (!tapCooldown) {
+                if (tapCount < maxTaps) {
+                    tapCount++;
+                    points += tapRate;
+                    updatePoints();
+                } else {
+                    startCooldown();
+                }
+            }
+        });
+
+        function updatePoints() {
+            document.querySelector('.score').textContent = `Points: ${points}`;
+            document.querySelector('.tap-limit').textContent = `Taps left: ${maxTaps - tapCount}`;
+        }
+
+        function startCooldown() {
+            tapCooldown = true;
+            alert("You have reached the tap limit. Wait 1 minute for more taps.");
+            document.getElementById('coin').style.pointerEvents = 'none';
+
+            setTimeout(function() {
+                tapCount = 0;
+                tapCooldown = false;
+                document.getElementById('coin').style.pointerEvents = 'auto';
+                alert("You can tap again!");
+            }, 60000);
+        }
+
+        document.getElementById('subscribe-channel').addEventListener('click', function() {
+            points += 100;
+            alert('You earned 100 points for subscribing to our channel!');
+            updatePoints();
+        });
+
+        document.getElementById('earn-btn').addEventListener('click', function() {
+            const socialButtons = document.getElementById('social-buttons');
+            socialButtons.style.display = socialButtons.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        document.getElementById('boost-btn').addEventListener('click', function() {
+            if (points >= boostCost) {
+                points -= boostCost;
+                tapRate++;
+                alert(`Boost activated! Tap rate is now ${tapRate} points per tap.`);
+                updatePoints();
+            } else {
+                alert('Not enough points to boost.');
+            }
+        });
+
+        document.getElementById('referral-btn').addEventListener('click', function() {
+            const username = prompt("Enter the username of the person who referred you:");
+            if (username) {
+                alert(`Welcome, ${username}!`);
+            }
+        });
+
+        function closeSocialButtons() {
+            document.getElementById('social-buttons').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
