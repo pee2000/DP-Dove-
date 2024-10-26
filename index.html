@@ -63,8 +63,8 @@
         }
 
         #coin {
-            width: 25vw;
-            height: 25vw;
+            width: 50vw;
+            height: 50vw;
             cursor: pointer;
             background: url('https://i.postimg.cc/ppt4QVw4/coin-img.png') no-repeat center;
             background-size: contain;
@@ -84,7 +84,7 @@
             gap: 10px;
         }
 
-        .subscribe-btn, .boost-btn, .subscribe-earn-btn {
+        .subscribe-btn, .subscribe-earn-btn, .boost-btn, .referral-btn {
             flex: 1;
             padding: 8px;
             background: linear-gradient(135deg, maroon, red, yellow);
@@ -98,7 +98,7 @@
             align-items: center;
         }
 
-        .subscribe-btn:hover, .boost-btn:hover, .subscribe-earn-btn:hover {
+        .subscribe-btn:hover, .boost-btn:hover, .subscribe-earn-btn:hover, .referral-btn:hover {
             background: linear-gradient(135deg, yellow, red, maroon);
         }
 
@@ -122,6 +122,16 @@
         .social-btn:hover {
             background: linear-gradient(135deg, yellow, red, maroon);
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .boost-btn, .referral-btn {
+            width: 48%;
+        }
     </style>
 </head>
 <body>
@@ -141,7 +151,11 @@
         <div class="subscription">
             <a href="https://t.me/DPDovebot" target="_blank" class="subscribe-btn" id="subscribe-channel">Subscribe Our Channel (+100)</a>
             <a href="#" class="subscribe-earn-btn" id="earn-btn">Earn</a>
-            <a href="#" class="boost-btn" id="boost-btn">Boost Your Earning</a>
+
+            <div class="action-buttons">
+                <a href="#" class="boost-btn" id="boost-btn">Boost Your Earning</a>
+                <a href="https://pee2000.github.io/DP-Dove-/#" target="_blank" class="referral-btn" id="referral-btn">Referral</a>
+            </div>
 
             <div class="social-buttons" id="social-buttons">
                 <a href="https://t.me/blum/app?startapp=ref_zvCjDIm11f" target="_blank" class="social-btn" id="blum-btn">Blum (+50)</a>
@@ -162,7 +176,7 @@
         const boostCost = 20000;
 
         document.getElementById('coin').addEventListener('click', function() {
-            closeSocialButtons(); // Close social buttons when coin is tapped
+            closeSocialButtons();
             if (!tapCooldown) {
                 if (tapCount < maxTaps) {
                     tapCount++;
@@ -237,16 +251,12 @@
             if (points >= boostCost) {
                 points -= boostCost;
                 tapRate++;
-                alert(`Boost activated! Tap rate is now ${tapRate} points per tap.`);
+                alert('Boost activated! Tap rate increased.');
                 updatePoints();
             } else {
-                alert('Not enough points to boost.');
+                alert('Not enough points for a boost!');
             }
         });
 
         function closeSocialButtons() {
             document.getElementById('social-buttons').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
