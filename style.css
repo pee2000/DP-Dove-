@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Shadow Black', Arial, sans-serif; /* Set font to Shadow Black */
+    font-style: normal; /* Set body text style to normal */
+    background-color: gold; /* Set the background to gold */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-weight: bold; /* Make body text bold */
+}
+
+.container {
+    background-color: purple; /* Set the container background to purple */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    color: white; /* Ensure text inside the container is readable */
+    font-family: 'Shadow Black', Arial, sans-serif; /* Set container font to Shadow Black */
+    font-weight: bold; /* Make container text bold */
+}
+
+h1 {
+    color: white; /* Change the title color to white */
+    margin-bottom: 20px;
+    font-size: 6vw;
+}
+
+.status p {
+    font-size: 5vw;
+    margin-bottom: 10px;
+}
+
+/* Coin container with sky blue background */
+.coin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    background-color: skyblue; /* Sky blue background for the tapping area */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Points display (above the coin) */
+.score {
+    font-size: 6vw;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white; /* Ensure the points text is visible */
+}
+
+/* Coin image with transparency revealing skyblue background */
+#coin {
+    width: 25vw;
+    height: 25vw;
+    cursor: pointer;
+
+    /* Background Image for the Coin */
+    background: url('/storage/emulated/0/Game folder/img/behind coin background') no-repeat center;
+    background-size: contain; /* Ensure the image fits properly within the coin */
+    margin-bottom: 10px; /* Space below the image */
+}
+
+#coin:hover {
+    transform: scale(1.1); /* Add a hover effect to enlarge the coin */
+}
+
+/* Tap limit counter display (below the coin) */
+.tap-limit {
+    font-size: 5vw;
+    color: red;
+    margin-top: 10px;
+}
+
+/* Subscription Section */
+.subscription {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.subscribe-btn, .boost-btn, .subscribe-earn-btn {
+    flex: 1;
+    padding: 8px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 4vw;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Social buttons */
+.social-buttons {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.social-btn {
+    padding: 6px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 4vw;
+    text-align: center;
+}
+
+/* Media Queries for smaller mobile devices */
+@media (max-width: 400px) {
+    .container {
+        width: 95%;
+    }
+    #coin {
+        width: 30vw;
+        height: 30vw;
+    }
+}
