@@ -143,7 +143,7 @@
             <a href="#" class="subscribe-earn-btn" id="earn-btn">Earn</a>
             <a href="#" class="boost-btn" id="boost-btn">Boost Your Earning</a>
 
-            <div class="social-buttons">
+            <div class="social-buttons" id="social-buttons">
                 <a href="https://t.me/blum/app?startapp=ref_zvCjDIm11f" target="_blank" class="social-btn" id="blum-btn">Blum (+50)</a>
                 <a href="https://t.me/major/start?startapp=7528807964" target="_blank" class="social-btn" id="major-btn">Major (+50)</a>
                 <a href="https://t.me/theYescoin_bot/Yescoin?startapp=y80Owy" target="_blank" class="social-btn" id="yescoin-btn">Yescoin (+50)</a>
@@ -162,6 +162,7 @@
         const boostCost = 20000;
 
         document.getElementById('coin').addEventListener('click', function() {
+            closeSocialButtons(); // Close social buttons when coin is tapped
             if (!tapCooldown) {
                 if (tapCount < maxTaps) {
                     tapCount++;
@@ -198,7 +199,8 @@
         });
 
         document.getElementById('earn-btn').addEventListener('click', function() {
-            document.querySelector('.social-buttons').style.display = 'flex';
+            const socialButtons = document.getElementById('social-buttons');
+            socialButtons.style.display = socialButtons.style.display === 'flex' ? 'none' : 'flex';
         });
 
         document.getElementById('blum-btn').addEventListener('click', function() {
@@ -241,6 +243,10 @@
                 alert('Not enough points to boost.');
             }
         });
+
+        function closeSocialButtons() {
+            document.getElementById('social-buttons').style.display = 'none';
+        }
     </script>
 </body>
 </html>
