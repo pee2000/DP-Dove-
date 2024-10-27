@@ -149,7 +149,7 @@
             
             <div class="button-group">
                 <a href="#" class="boost-btn" id="boost-btn">Boost Your Earning</a>
-                <a href="https://t.me/DPdove_bot?profile" target="_blank" class="referral-btn" id="referral-btn">Referral</a>
+                <a href="#" class="referral-btn" id="referral-btn">Referral</a>
             </div>
 
             <div class="social-buttons" id="social-buttons">
@@ -165,7 +165,7 @@
     <script>
         let tapCount = 0;
         let maxTaps = 2000;
-        let points = 0;
+        let points = localStorage.getItem("points") ? parseInt(localStorage.getItem("points")) : 0;
         let tapCooldown = false;
         let tapRate = 1;
         const boostCost = 20000;
@@ -177,6 +177,7 @@
                     tapCount++;
                     points += tapRate;
                     updatePoints();
+                    savePoints();
                 } else {
                     startCooldown();
                 }
@@ -186,6 +187,10 @@
         function updatePoints() {
             document.querySelector('.score').textContent = `Points: ${points}`;
             document.querySelector('.tap-limit').textContent = `Taps left: ${maxTaps - tapCount}`;
+        }
+
+        function savePoints() {
+            localStorage.setItem("points", points);
         }
 
         function startCooldown() {
@@ -205,6 +210,7 @@
             points += 100;
             alert('You earned 100 points for subscribing to our channel!');
             updatePoints();
+            savePoints();
         });
 
         document.getElementById('earn-btn').addEventListener('click', function() {
@@ -218,18 +224,22 @@
                 tapRate++;
                 alert(`Boost activated! Tap rate is now ${tapRate} points per tap.`);
                 updatePoints();
+                savePoints();
             } else {
                 alert('Not enough points to boost.');
             }
         });
 
         document.getElementById('referral-btn').addEventListener('click', function() {
-            alert("Share the link with a friend to refer them: https://t.me/DPdove_bot?profile");
+            window.open("https://t.me/DPdove_bot?profile", "_blank");
         });
 
         function closeSocialButtons() {
             document.getElementById('social-buttons').style.display = 'none';
         }
+
+        // Initialize points display on load
+        updatePoints();
     </script>
 </body>
 </html>
