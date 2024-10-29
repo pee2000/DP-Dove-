@@ -26,18 +26,28 @@
         }
         .coin-container {
             margin: 20px 0;
-            background: url('https://i.postimg.cc/KkBQ4B8z/IMG-20241020-WA0002.jpg') no-repeat center;
-            background-size: cover;
             padding: 20px;
             border-radius: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: url('https://i.postimg.cc/KkBQ4B8z/IMG-20241020-WA0002.jpg') no-repeat center;
+            background-size: cover;
         }
-        .score, .tap-limit {
+        .score {
             font-size: 1.2rem;
-            margin: 10px 0;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .tap-limit {
+            font-size: 1.2rem;
+            color: lightblue;
+            margin-top: 10px;
         }
         #coin {
-            width: 200px; /* Doubled the size */
-            height: 200px; /* Doubled the size */
+            width: 300px; /* Adjusted size */
+            height: 300px; /* Adjusted size */
             cursor: pointer;
             background: url('https://i.postimg.cc/ppt4QVw4/coin-img.png') no-repeat center;
             background-size: cover;
@@ -91,34 +101,11 @@
             padding: 10px;
             margin-top: 10px;
         }
-        .social-buttons {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .social-btn {
-            padding: 6px;
-            background: linear-gradient(135deg, maroon, red, yellow);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 4vw;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>DP Dove🕊️</h1>
-        
-        <div class="social-buttons" id="social-buttons">
-            <a href="https://t.me/blum/app?startapp=ref_zvCjDIm11f" target="_blank" class="social-btn" id="blum-btn">Blum (+50)</a>
-            <a href="https://t.me/major/start?startapp=7528807964" target="_blank" class="social-btn" id="major-btn">Major (+50)</a>
-            <a href="https://t.me/theYescoin_bot/Yescoin?startapp=y80Owy" target="_blank" class="social-btn" id="yescoin-btn">Yescoin (+50)</a>
-            <a href="http://www.youtube.com/@peesmilereview-q8u" target="_blank" class="social-btn" id="youtube-btn">YouTube (+50)</a>
-            <a href="https://x.com/DoveDp35572" target="_blank" class="social-btn" id="x-btn">Visit X (+50)</a>
-        </div>
 
         <div class="coin-container">
             <div class="score">Points: 0</div>
@@ -149,7 +136,6 @@
         let maxTaps = 2000;
         let points = parseInt(localStorage.getItem("points")) || 0;
         let username = localStorage.getItem("username");
-        let users = JSON.parse(localStorage.getItem("users")) || [];
         let tapRate = 1;
         const boostCost = 20000;
 
@@ -157,6 +143,8 @@
         const usernamePopup = document.getElementById("username-popup");
         if (!username) {
             usernamePopup.style.display = "flex";
+        } else {
+            updateDisplay();
         }
 
         // Save username
@@ -164,10 +152,11 @@
             const inputUsername = document.getElementById("username-input").value.trim();
             if (inputUsername) {
                 username = inputUsername;
-                users.push({ username: username, points: points });
+                points = 0;  // Reset points for new user
                 localStorage.setItem("username", username);
-                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem("points", points);
                 usernamePopup.style.display = "none";
+                updateDisplay();
             } else {
                 alert("Please enter a valid username.");
             }
@@ -178,7 +167,6 @@
             document.querySelector('.score').textContent = `Points: ${points}`;
             document.querySelector('.tap-limit').textContent = `Taps left: ${maxTaps - tapCount}`;
         }
-        updateDisplay();
 
         // Tap coin to earn points
         document.getElementById("coin").addEventListener("click", function() {
@@ -190,12 +178,6 @@
             } else {
                 alert("Tap limit reached. Try again later.");
             }
-        });
-
-        // Show/Hide social buttons when Earn is clicked
-        document.getElementById("earn-btn").addEventListener("click", function() {
-            const socialButtons = document.getElementById("social-buttons");
-            socialButtons.style.display = socialButtons.style.display === 'flex' ? 'none' : 'flex';
         });
 
         // Boost functionality
@@ -223,12 +205,11 @@
 
         // Top user button functionality
         document.getElementById("top-user-btn").addEventListener("click", function() {
-            let topUserText = "Top Users:\n";
-            users.forEach(user => {
-                topUserText += `${user.username}: ${user.points} points\n`;
-            });
-            alert(topUserText);
+            alert(`${username}: ${points} points`);
         });
+
+        // Initialize display on load
+        updateDisplay();
     </script>
 </body>
 </html>
