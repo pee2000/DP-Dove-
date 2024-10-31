@@ -37,7 +37,7 @@
         }
         .score {
             font-size: 1.2rem;
-            color: white;
+            color: yellow;
             margin-bottom: 10px;
         }
         .tap-limit {
@@ -46,8 +46,8 @@
             margin-top: 10px;
         }
         #coin {
-            width: 300px; /* Adjusted size */
-            height: 300px; /* Adjusted size */
+            width: 200px;
+            height: 200px;
             cursor: pointer;
             background: url('https://i.postimg.cc/ppt4QVw4/coin-img.png') no-repeat center;
             background-size: cover;
@@ -101,11 +101,34 @@
             padding: 10px;
             margin-top: 10px;
         }
+        .social-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .social-btn {
+            padding: 6px;
+            background: linear-gradient(135deg, maroon, red, yellow);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 4vw;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>DP Dove🕊️</h1>
+        
+        <div class="social-buttons" id="social-buttons">
+            <a href="https://t.me/blum/app?startapp=ref_zvCjDIm11f" target="_blank" class="social-btn" id="blum-btn">Blum (+50)</a>
+            <a href="https://t.me/major/start?startapp=7528807964" target="_blank" class="social-btn" id="major-btn">Major (+50)</a>
+            <a href="https://t.me/theYescoin_bot/Yescoin?startapp=y80Owy" target="_blank" class="social-btn" id="yescoin-btn">Yescoin (+50)</a>
+            <a href="http://www.youtube.com/@peesmilereview-q8u" target="_blank" class="social-btn" id="youtube-btn">YouTube (+50)</a>
+            <a href="https://x.com/DoveDp35572" target="_blank" class="social-btn" id="x-btn">Visit X (+50)</a>
+        </div>
 
         <div class="coin-container">
             <div class="score">Points: 0</div>
@@ -178,6 +201,12 @@
             } else {
                 alert("Tap limit reached. Try again later.");
             }
+        });
+
+        // Show/Hide social buttons when Earn is clicked
+        document.getElementById("earn-btn").addEventListener("click", function() {
+            const socialButtons = document.getElementById("social-buttons");
+            socialButtons.style.display = socialButtons.style.display === 'flex' ? 'none' : 'flex';
         });
 
         // Boost functionality
