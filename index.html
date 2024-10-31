@@ -36,18 +36,18 @@
             background-size: cover;
         }
         .score {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: white;
             margin-bottom: 10px;
         }
         .tap-limit {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: lightblue;
             margin-top: 10px;
         }
         #coin {
-            width: 200px;
-            height: 200px;
+            width: 350px;
+            height: 350px;
             cursor: pointer;
             background: url('https://i.postimg.cc/ppt4QVw4/coin-img.png') no-repeat center;
             background-size: cover;
@@ -140,7 +140,7 @@
 
         <div class="button-group">
             <a href="#" id="boost-btn">Boost Your Earning</a>
-            <a href="#" id="top-user-btn">Top User</a>
+            <a href="#" id="top-user-btn">Top Users</a> <!-- Updated button label -->
             <a href="#" id="earn-btn">Earn</a>
             <a href="#" id="referral-btn">Referral</a>
         </div>
@@ -162,6 +162,9 @@
         let tapRate = 1;
         const boostCost = 20000;
 
+        // Array to hold all users and their points
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
         // Show username popup if no username saved
         const usernamePopup = document.getElementById("username-popup");
         if (!username) {
@@ -178,6 +181,8 @@
                 points = 0;  // Reset points for new user
                 localStorage.setItem("username", username);
                 localStorage.setItem("points", points);
+                users.push({ username: username, points: points });
+                localStorage.setItem("users", JSON.stringify(users));
                 usernamePopup.style.display = "none";
                 updateDisplay();
             } else {
@@ -198,6 +203,13 @@
                 points += tapRate;
                 updateDisplay();
                 localStorage.setItem("points", points);
+
+                // Update points in users array
+                const userIndex = users.findIndex(user => user.username === username);
+                if (userIndex !== -1) {
+                    users[userIndex].points = points;
+                    localStorage.setItem("users", JSON.stringify(users));
+                }
             } else {
                 alert("Tap limit reached. Try again later.");
             }
